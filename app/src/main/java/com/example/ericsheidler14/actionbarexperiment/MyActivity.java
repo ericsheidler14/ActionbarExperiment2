@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.support.v4.view.ViewPager;
 
 public class MyActivity extends AppCompatActivity {
 
@@ -23,6 +24,9 @@ public class MyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my);
 
         ActionBar actionBar = getActionBar();
+        mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
+
+        viewPager.setAdapter(mAdapter);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         actionBar.setDisplayShowTitleEnabled(false);
         /*ActionBar.TabListener tabListener = new ActionBar.TabListener() {
@@ -87,20 +91,19 @@ public class MyActivity extends AppCompatActivity {
         public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft)  {
             ft.remove(fragment);
         }
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)   {
+        getMenuInflater().inflate(R.menu.menu_my, menu);
+        return true;
+    }
 
-        @Override
-        public boolean onCreateOptionsMenu(Menu menu)   {
-            getMenuInflater().inflate(R.menu.menu_my, menu);
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
             return true;
         }
-
-        @Override
-        public boolean onOptionsItemSelected(MenuItem item) {
-            int id = item.getItemId();
-            if (id == R.id.action_settings) {
-                return true;
-            }
-            return super.onOptionsItemSelected(item);
-        }
+        return super.onOptionsItemSelected(item);
     }
 }
