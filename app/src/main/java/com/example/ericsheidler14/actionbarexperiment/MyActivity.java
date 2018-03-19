@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -17,18 +18,53 @@ public class MyActivity extends AppCompatActivity {
     private Fragment lunchFragment;
     private Fragment snackFragment;
     private Fragment dinnerFragment;
+    private FragmentPagerAdapter mAdapter;
+    private ViewPager viewPager;
+    private String[] tabs = { "Breakfast", "Lunch", "Dinner", "Snack"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my);
 
-        ActionBar actionBar = getActionBar();
-        mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
+        final ActionBar actionBar = getActionBar();
+        mAdapter = new TabsPagerAdapter(getFragmentManager()) {
+            @Override
+            public int getCount() {
+                return 4;
+            }
+
+            @Override
+            public android.support.v4.app.Fragment getItem(int position) {
+                return null;
+            }
+        };
 
         viewPager.setAdapter(mAdapter);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         actionBar.setDisplayShowTitleEnabled(false);
+
+        for (String tabName : tabs) {
+            actionBar.addTab(actionBar.newTab().setText(tabName)
+                    .setTabListener((ActionBar.TabListener) this));
+        }
+
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                actionBar.setSelectedNavigationItem(position);
+            }
+
+            @Override
+            public void onPageScrolled(int arg0, float arg1, int arg2) {
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int arg0) {
+            }
+        });
+
+
         /*ActionBar.TabListener tabListener = new ActionBar.TabListener() {
             @Override
             public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
