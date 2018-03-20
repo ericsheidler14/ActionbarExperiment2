@@ -18,7 +18,7 @@ public class MyActivity extends AppCompatActivity {
     private Fragment lunchFragment;
     private Fragment snackFragment;
     private Fragment dinnerFragment;
-    private FragmentPagerAdapter mAdapter;
+    private TabsPagerAdapter mAdapter;
     private ViewPager viewPager;
     private String[] tabs = { "Breakfast", "Lunch", "Dinner", "Snack"};
 
@@ -28,7 +28,7 @@ public class MyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my);
 
         final ActionBar actionBar = getActionBar();
-        mAdapter = new TabsPagerAdapter(getFragmentManager()) {
+        mAdapter = new TabsPagerAdapter(getSupportFragmentManager()) {
             @Override
             public int getCount() {
                 return 4;
